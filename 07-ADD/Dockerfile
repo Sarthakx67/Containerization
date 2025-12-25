@@ -7,6 +7,9 @@ RUN yum install -y nginx && yum clean all
 # Add works same as copy and can get files from internet example
 ADD https://raw.githubusercontent.com/Sarthakx67/Containerization/refs/heads/main/06-COPY/portfolio.html /usr/share/nginx/html/portfolio.html
 
+# Add also unzip/untar file it copies
+ADD sample-1.tar /tmp/
+
 # ensure nginx can read it
 RUN chmod 644 /usr/share/nginx/html/portfolio.html
 
