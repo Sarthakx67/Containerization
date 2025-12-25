@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sarthak Singh | DevOps & Cloud Automation</title>
+    
+    <!-- Placeholder Comments -->
+    <!-- Chosen Palette: "Warm Neutrals" - A calming, professional palette using off-white, beige, slate, and a subtle indigo accent for focus points. -->
+    <!-- Application Structure Plan: A narrative-driven, single-page application. The core is an interactive vertical timeline ("The Journey") that visually represents the user's skill progression. This is more engaging than a static list and directly supports the core narrative of growth. Clicking a project on the timeline reveals details in a modal, keeping the main view clean. The structure is: Hero -> About -> The Journey (Interactive Timeline) -> Skills (with visualization) -> Contact. This flow guides the user from who the person is, to what their story is, to what they can do. -->
+    <!-- Visualization & Content Choices: Report Info: Project progression -> Goal: Show growth over time -> Viz/Method: Interactive JS Timeline -> Interaction: Click to open modal with details -> Justification: Visually compelling, reinforces narrative, encourages exploration. Report Info: Skill categories -> Goal: Give a quick overview of capabilities -> Viz/Method: HTML/CSS tag cloud + Chart.js Radar Chart -> Interaction: Hover effects + visual summary -> Justification: The tag cloud is scannable, while the radar chart offers a high-impact "wow" factor summarizing proficiency areas. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f5f4; /* Warm Neutral: Stone 100 */
+        }
+        h1, h2, h3 {
+            font-family: 'Source Serif 4', serif;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body class="text-stone-800">
+
+    <!-- Header -->
+    <header class="bg-stone-100/80 backdrop-blur-lg sticky top-0 z-50 border-b border-stone-200">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-stone-900">Sarthak Singh</a>
+            <div class="hidden md:flex items-center space-x-6 text-stone-700">
+                <a href="#about" class="hover:text-indigo-600 transition-colors">About</a>
+                <a href="#journey" class="hover:text-indigo-600 transition-colors">The Journey</a>
+                <a href="#skills" class="hover:text-indigo-600 transition-colors">Skills</a>
+                <a href="#contact" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-6">
+
+        <!-- Hero Section -->
+        <section class="text-center py-24 md:py-32">
+            <h1 class="text-5xl md:text-7xl font-bold text-stone-900">DevOps Engineer</h1>
+            <p class="mt-4 max-w-2xl mx-auto text-lg md:text-xl text-stone-600">
+                I transform complex infrastructure requirements into reliable, scalable, and fully automated systems using Infrastructure as Code.
+            </p>
+        </section>
+
+        <!-- About Me Section -->
+        <section id="about" class="py-20 border-t border-stone-200">
+             <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-4xl font-bold text-stone-900 mb-6">About Me</h2>
+                <p class="text-lg text-stone-700 leading-relaxed">
+                    I am a Computer Science student with a proven passion for building the foundations of modern software delivery. My journey is focused on a deep understanding of infrastructure, from architecting secure cloud networks to creating reusable, automated deployment solutions with Terraform and Ansible.
+                </p>
+                <p class="mt-4 text-lg text-stone-700 leading-relaxed">
+                    I am driven by the challenge of building reliable, scalable, and efficient systems by turning complex requirements into robust Infrastructure as Code. This portfolio showcases my deliberate progression from foundational scripting to advanced, declarative automation.
+                </p>
+            </div>
+        </section>
+
+        <!-- The Journey Section (Interactive Timeline) -->
+        <section id="journey" class="py-20 border-t border-stone-200">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-4xl font-bold text-stone-900 text-center mb-16">The Journey: From Scripts to IaC</h2>
+                <div id="timeline" class="relative">
+                    <!-- Timeline line -->
+                    <div class="absolute left-1/2 -translate-x-1/2 h-full w-0.5 bg-stone-300"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="py-20 border-t border-stone-200">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-4xl font-bold text-stone-900 text-center mb-16">Technical Toolbox</h2>
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <div id="skills-container" class="space-y-6"></div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="skillsRadarChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 border-t border-stone-200">
+            <div class="text-center max-w-2xl mx-auto">
+                <h2 class="text-4xl font-bold text-stone-900">Let's Connect</h2>
+                <p class="mt-4 text-lg text-stone-600">
+                    I'm always open to discussing new projects, creative ideas, or opportunities to be part of an ambitious team.
+                </p>
+                <div class="mt-8 flex justify-center gap-4">
+                     <a href="https://github.com/Sarthakx67" target="_blank" class="bg-stone-800 hover:bg-stone-900 text-white font-semibold py-3 px-6 rounded-lg transition-colors">GitHub</a>
+                     <a href="https://www.linkedin.com/in/sarthak-singh-a0aa62322" target="_blank" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors">LinkedIn</a>
+                     <a href="https://sarthakx67.hashnode.dev" target="_blank" class="bg-stone-200 hover:bg-stone-300 text-stone-800 font-semibold py-3 px-6 rounded-lg transition-colors">Blog</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Project Modal -->
+    <div id="projectModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4" onclick="closeModal()">
+        <div class="bg-white w-full max-w-3xl max-h-[90vh] rounded-2xl shadow-2xl overflow-y-auto" onclick="event.stopPropagation()">
+            <div class="p-8 md:p-12">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h3 id="modal-title" class="text-3xl font-bold text-stone-900"></h3>
+                        <p id="modal-subtitle" class="text-indigo-600 font-semibold mt-1"></p>
+                    </div>
+                    <button onclick="closeModal()" class="text-stone-500 hover:text-stone-800 transition-colors">&times;</button>
+                </div>
+                
+                <div class="mt-6 border-t border-stone-200 pt-6">
+                    <h4 class="text-lg font-bold text-stone-800 mb-2">The Problem</h4>
+                    <p id="modal-problem" class="text-stone-600 leading-relaxed"></p>
+
+                    <h4 class="text-lg font-bold text-stone-800 mt-6 mb-2">The Solution</h4>
+                    <p id="modal-solution" class="text-stone-600 leading-relaxed"></p>
+
+                    <h4 class="text-lg font-bold text-stone-800 mt-6 mb-2">Key Challenges & Learnings</h4>
+                    <p id="modal-learnings" class="text-stone-600 leading-relaxed"></p>
+                    
+                    <div id="modal-visual-asset" class="mt-6"></div>
+
+                    <h4 class="text-lg font-bold text-stone-800 mt-6 mb-2">Tech Stack</h4>
+                    <div id="modal-tech-stack" class="flex flex-wrap gap-2"></div>
+
+                    <div class="mt-8">
+                        <a id="modal-github-link" href="#" target="_blank" class="inline-block bg-stone-800 hover:bg-stone-900 text-white font-semibold py-2 px-5 rounded-lg transition-colors">View on GitHub</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Data Storage (Single Source of Truth) ---
+        const projectsData = [
+            {
+                project_name: "Fully Automated E-Commerce Platform Deployment",
+                subtitle: "End-to-End Declarative Automation",
+                problem: "After proving concepts with manual documentation and procedural scripts, it was clear that a fully declarative, state-managed solution was needed for a true 'one-click' deployment that was both scalable and idempotent.",
+                solution: "I engineered a complete, end-to-end automated solution using a declarative IaC toolchain. Terraform (consuming my custom VPC and Security Group modules) provisions the entire AWS infrastructure. Upon creation, a dedicated Ansible server is automatically provisioned via a `user_data` script, which then pulls configuration and roles to declaratively configure all application microservices. This creates a fully automated, repeatable deployment from a bare AWS account to a functional application.",
+                challenges_and_learnings: "The key technical hurdle was the seamless, automated handoff from Terraform to Ansible. I iterated on several methods before settling on a `user_data` script that dynamically pulled an Ansible playbook from Git and ran it. This taught me a valuable lesson in bootstrapping configuration management on newly provisioned infrastructure and managing dependencies between Terraform resources.",
+                tech_stack: ["Terraform", "Ansible", "AWS EC2", "AWS VPC", "AWS SSM", "Route 53", "YAML"],
+                github_url: "https://github.com/Sarthakx67/RoboShop-Deployment-with-Terraform-Ansible.git",
+                visual_asset_url: ""
+            },
+            {
+                project_name: "Reusable Terraform Security Group Module",
+                subtitle: "Building Declarative Security Controls",
+                problem: "Hardcoding security group rules within each project's Terraform configuration is not scalable, leads to rule duplication, and makes security policy updates difficult and error-prone.",
+                solution: "Following the same principles as the VPC module, I created a dedicated, reusable Terraform module for AWS Security Groups. It allows for defining ingress/egress rules as structured variables, making it simple to attach standardized, well-defined security policies to any resource, ensuring consistency and ease of management.",
+                challenges_and_learnings: "I learned how to model security policies as code and the importance of abstracting security rules into reusable modules. This project deepened my understanding of Terraform's module composition and how to create a library of internal IaC components that enforce security best practices by default.",
+                tech_stack: ["Terraform (Module Creation)", "AWS Security Groups", "IaC Best Practices", "Git"],
+                github_url: "https://github.com/Sarthakx67/RoboShop-Security-Group-Module",
+                visual_asset_url: ""
+            },
+            {
+                project_name: "Reusable Terraform Module for a Production-Ready AWS VPC",
+                subtitle: "Architecting Foundational Infrastructure",
+                problem: "Provisioning a secure, multi-tier AWS network for every new project is repetitive and can lead to inconsistent, insecure configurations. A foundational, best-practice template was needed to ensure consistency and speed.",
+                solution: "I architected and built a reusable, production-ready Terraform module to provision a secure and scalable AWS VPC. The module establishes a multi-AZ, three-tier subnet architecture (public, private, database), implements a NAT Gateway for secure egress traffic from private subnets, and creates necessary route tables. It is fully configurable via input variables and exposes critical resource IDs as outputs for seamless integration with other IaC components.",
+                challenges_and_learnings: "The primary challenge was balancing flexibility with security. I had to decide which parameters should be configurable versus which should be fixed to enforce best practices. This taught me the importance of designing for the '80% use case' while allowing overrides for exceptions. I also learned how to write clear documentation for module variables and outputs, which is crucial for making a module truly reusable by others.",
+                tech_stack: ["Terraform (Module Creation)", "AWS VPC", "AWS Subnetting", "AWS NAT Gateway", "Git"],
+                github_url: "https://github.com/Sarthakx67/terraform-aws-vpc-module.git",
+                visual_asset_url: ""
+            },
+            {
+                project_name: "E-Commerce Deployment with Shell Scripts",
+                subtitle: "Procedural Automation",
+                problem: "After documenting the manual steps, the next logical step was to automate the repetitive tasks. This required translating the manual runbook into a repeatable, procedural script.",
+                solution: "To build foundational automation skills, I authored a suite of shell scripts to automate the setup of the multi-service e-commerce application. This project involved managing components like MongoDB and Redis, providing a deep understanding of the procedural steps that tools like Ansible would later abstract away into a declarative format.",
+                challenges_and_learnings: "This project was a masterclass in the limitations of procedural scripting. While faster than manual deployment, ensuring the scripts were idempotent (safe to run multiple times) was a major challenge and highlighted the need for state-aware configuration management tools like Ansible or Terraform.",
+                tech_stack: ["Shell Scripting", "Bash", "Linux System Administration"],
+                github_url: "https://github.com/Sarthakx67/shell-script",
+                visual_asset_url: ""
+            },
+            {
+                project_name: "RoboShop Deployment Documentation",
+                subtitle: "Establishing the Foundational Blueprint",
+                problem: "Before any automation can be built, a clear, reliable, and repeatable set of manual deployment steps is essential. Without a documented baseline, automation efforts are based on guesswork and are prone to failure.",
+                solution: "I created a comprehensive runbook documenting the step-by-step manual deployment and configuration for every RoboShop microservice. This documentation served as the 'source of truth' and foundational blueprint for all subsequent automation projects, ensuring every dependency and configuration detail was captured.",
+                challenges_and_learnings: "This project reinforced the critical importance of understanding a system manually before attempting to automate it. It taught me how to meticulously document technical procedures and dependencies, a skill vital for knowledge sharing and for building robust, reliable automation.",
+                tech_stack: ["Technical Writing", "System Analysis", "Linux Administration"],
+                github_url: "https://github.com/Sarthakx67/RoboShop-Documentation",
+                visual_asset_url: ""
+            }
+        ];
+        
+        const skill_categories = [
+            { category_name: "IaC & Automation", skills: ["Terraform (Modules, State)", "Ansible (Playbooks, Roles)", "Shell/Bash Scripting"] },
+            { category_name: "Cloud (AWS)", skills: ["VPC, EC2, S3", "Route 53, IAM", "SSM Parameter Store", "NAT Gateway"] },
+            { category_name: "CI/CD & Containers", skills: ["Jenkins (Pipelines)", "Docker (Dockerfile, Compose)", "Nginx"] },
+            { category_name: "Languages & Tools", skills: ["Python", "YAML", "JSON", "Git"] }
+        ];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Core Interaction Handling ---
+
+            // Populate Timeline
+            const timelineContainer = document.getElementById('timeline');
+            projectsData.forEach((project, index) => {
+                const isOdd = index % 2 !== 0;
+                const timelineItem = document.createElement('div');
+                timelineItem.className = `relative mb-8 flex justify-between items-center w-full ${isOdd ? 'flex-row-reverse' : ''}`;
+                timelineItem.innerHTML = `
+                    <div class="order-1 w-5/12"></div>
+                    <div class="z-20 flex items-center order-1 bg-indigo-600 shadow-xl w-8 h-8 rounded-full">
+                        <h1 class="mx-auto font-semibold text-lg text-white">${projectsData.length - index}</h1>
+                    </div>
+                    <div class="order-1 bg-white rounded-lg shadow-xl w-5/12 px-6 py-4 cursor-pointer hover:shadow-2xl hover:scale-105 transition-transform" onclick='openModal(${index})'>
+                        <h3 class="font-bold text-stone-800 text-lg">${project.project_name}</h3>
+                        <p class="text-sm text-indigo-600 font-semibold">${project.subtitle}</p>
+                        <p class="text-sm leading-snug tracking-wide text-stone-600 text-opacity-100 mt-2">Click to see details</p>
+                    </div>
+                `;
+                timelineContainer.appendChild(timelineItem);
+            });
+
+            // Populate Skills
+            const skillsContainer = document.getElementById('skills-container');
+            skill_categories.forEach(category => {
+                const categoryDiv = document.createElement('div');
+                categoryDiv.innerHTML = `
+                    <h3 class="text-xl font-bold text-stone-800 mb-3">${category.category_name}</h3>
+                    <div class="flex flex-wrap gap-2">
+                        ${category.skills.map(skill => `<span class="bg-stone-200 text-stone-700 text-sm font-medium px-3 py-1 rounded-full">${skill}</span>`).join('')}
+                    </div>
+                `;
+                skillsContainer.appendChild(categoryDiv);
+            });
+
+            // Chart.js Radar Chart
+            const ctx = document.getElementById('skillsRadarChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['IaC & Automation', 'Cloud (AWS)', 'CI/CD & Containers', 'Scripting & Tools'],
+                    datasets: [{
+                        label: 'Area of Expertise',
+                        data: [9, 8, 8, 7], // Representative values
+                        backgroundColor: 'rgba(101, 116, 205, 0.2)',
+                        borderColor: 'rgba(79, 70, 229, 1)',
+                        borderWidth: 2,
+                        pointBackgroundColor: 'rgba(79, 70, 229, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(79, 70, 229, 1)'
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: { color: 'rgba(0, 0, 0, 0.1)' },
+                            grid: { color: 'rgba(0, 0, 0, 0.1)' },
+                            pointLabels: { 
+                                font: { size: 14, family: "'Inter', sans-serif" },
+                                color: '#44403c' // stone-700
+                            },
+                            ticks: {
+                                backdropColor: 'transparent',
+                                color: '#a8a29e', // stone-400
+                                stepSize: 2
+                            },
+                            min: 0,
+                            max: 10
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+
+        });
+
+        // --- State Management & Functional Navigation (Modal) ---
+        const modal = document.getElementById('projectModal');
+
+        function openModal(projectIndex) {
+            const project = projectsData[projectIndex];
+            document.getElementById('modal-title').textContent = project.project_name;
+            document.getElementById('modal-subtitle').textContent = project.subtitle;
+            document.getElementById('modal-problem').textContent = project.problem;
+            document.getElementById('modal-solution').textContent = project.solution;
+            document.getElementById('modal-learnings').textContent = project.challenges_and_learnings;
+            document.getElementById('modal-github-link').href = project.github_url;
+            
+            const techStackContainer = document.getElementById('modal-tech-stack');
+            techStackContainer.innerHTML = project.tech_stack.map(skill => `<span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">${skill}</span>`).join('');
+
+            const visualAssetContainer = document.getElementById('modal-visual-asset');
+            if (project.visual_asset_url) {
+                visualAssetContainer.innerHTML = `<img src="${project.visual_asset_url}" alt="${project.project_name} Demo" class="rounded-lg border-2 border-stone-200 w-full">`;
+            } else {
+                visualAssetContainer.innerHTML = '';
+            }
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeModal() {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+    </script>
+
+</body>
+</html>
