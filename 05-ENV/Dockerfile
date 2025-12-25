@@ -1,0 +1,10 @@
+# almalinux is same as centos
+FROM almalinux:8
+RUN yum install nginx -y
+RUN echo "Hello From Sarthak" > /usr/share/nginx/html/hello.html
+LABEL name=ROBOSHOP \
+      ami=almalinux 
+ENV NAME=Sarthak \
+    AGE=30 \
+    ADDRESS=India
+CMD ["nginx","-g","daemon off;"]
