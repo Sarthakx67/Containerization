@@ -1,6 +1,7 @@
 # almalinux is same as centos
 FROM almalinux:8
 
+# NOTE: Clean yum caches (metadata + downloaded RPMs in /var/cache/yum) to reduce image size.
 RUN yum install -y nginx && yum clean all
 
 # Add works same as copy and can get files from internet example
