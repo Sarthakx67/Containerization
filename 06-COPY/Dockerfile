@@ -7,5 +7,5 @@ LABEL name=ROBOSHOP \
 ENV NAME=Sarthak \
     AGE=30 \
     ADDRESS=India
-COPY /d/Git-Repo/Containerization/06-COPY /usr/share/nginx/html/
+COPY . /usr/share/nginx/html/
 CMD ["nginx","-g","daemon off;"]
