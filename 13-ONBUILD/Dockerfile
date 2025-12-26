@@ -9,3 +9,8 @@ ONBUILD ADD index.html /usr/share/nginx/html/
 
 
 CMD [ "nginx" ,"-g", "daemon off;" ]
+
+
+# if you run images without index.html then 
+#        => ERROR [2/1] ADD index.html /usr/share/nginx/html/ 
+#               /index.html": not found --> this error will come
