@@ -1,5 +1,5 @@
 FROM almalinux:8
-RUN yum instal -y nginx
+RUN yum install -y nginx
 RUN rm -rf /usr/share/nginx/html/
 
 # ONBUILD makes rules that triggers run when a CHILD image is built FROM this image:
